@@ -1,3 +1,8 @@
+from .decorators import \
+(
+    validator,
+)
+
 from .base import \
 (
     BaseType,
