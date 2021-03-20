@@ -31,13 +31,6 @@ class BaseType(object):
 
     @classmethod
     def __get_validators__(cls):
-        methods = \
-        (
-            attribute
-            for attribute_name in dir(cls)
-            if hasattr(attribute := getattr(cls, attribute_name), 'validator')
-        )
-
         def validate(value):
             if type(value) == cls:
                 return value
@@ -45,8 +38,9 @@ class BaseType(object):
             validators = tuple \
             (
                 method
-                for method in methods
-                if (validator := method.__get__(cls).validator)
+                for attribute_name in dir(cls)
+                if (method := getattr(cls, attribute_name, None))
+                if (validator := getattr(method, 'validator', None))
                 if not validator.types or type(value) in validator.types
             )
 
