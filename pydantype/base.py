@@ -18,7 +18,7 @@ class BaseType(object):
 
     @classmethod
     def new(cls, *args, **kwargs):
-        return cls.__new__(cls, *args, **kwargs)
+        return cls.__new__(cls, *args, **kwargs, validated = True)
 
     @classmethod
     def validate(cls, value: Any):

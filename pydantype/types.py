@@ -6,27 +6,57 @@ from . import decorators
 from typing import \
 (
     Any,
+    Union,
 )
 
-class String(base.BaseType, str):
+class BaseBuiltinType(base.BaseType):
     @decorators.validator()
     def validate_any(cls, value: Any):
-        return cls.new(value, validated = True)
+        return cls.new(value)
 
-class Integer(base.BaseType, int):
+class String(BaseBuiltinType, str): pass
+class Float(BaseBuiltinType, float): pass
+
+class Integer(BaseBuiltinType, int):
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({humanize.intcomma(int(self))})'
 
-    @decorators.validator()
-    def validate_any(cls, value: Any):
-        return cls.new(value, validated = True)
+class Boolean(base.BaseType):
+    def __new__(cls, value, *, validated: bool = False):
+        return cls.validate(value)
 
-class PositiveInteger(Integer):
-    @decorators.validator()
-    def validate_any(cls, value):
-        value = cls.new(value, validated = True)
+    @decorators.validator(bool, int)
+    def validate_truthy(cls, value: Union[bool, int]) -> bool:
+        return bool(value)
 
-        if value < 0:
-            raise ValueError('Value must be positive (>= 0)')
+    @decorators.validator(str)
+    def validate_str(cls, value: str) -> bool:
+        value = value.lower()
 
-        return value
+        values = \
+        {
+            True: \
+            (
+                'true',
+                't',
+                '1',
+                'on',
+                'yes',
+                'y',
+            ),
+            False: \
+            (
+                'false',
+                'f',
+                '0',
+                'off',
+                'no',
+                'n',
+            ),
+        }
+
+        for bool_value, cases in values.items():
+            if value in cases:
+                return bool_value
+
+        raise ValueError('Unable to parse value as a boolean')

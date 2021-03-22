@@ -12,5 +12,6 @@ from .types import \
 (
     String,
     Integer,
-    PositiveInteger,
+    Boolean,
+    Float,
 )
