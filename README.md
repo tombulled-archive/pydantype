@@ -6,7 +6,7 @@ The `innertube` library uses [Poetry](https://github.com/python-poetry/poetry) a
 
 ### Using *pip* (from source)
 ```console
-# TODO
+pip install git+https://github.com/tombulled/pydantype.git
 ```
 
 ## Usage
