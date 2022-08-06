@@ -1,25 +1,28 @@
+from typing import Any, Union
+
 import humanize
 
-from . import base
-from . import decorators
+from . import base, decorators
 
-from typing import \
-(
-    Any,
-    Union,
-)
 
 class BaseBuiltinType(base.BaseType):
     @decorators.validator()
     def validate_any(cls, value: Any):
         return cls.new(value)
 
-class String(BaseBuiltinType, str): pass
-class Float(BaseBuiltinType, float): pass
+
+class String(BaseBuiltinType, str):
+    pass
+
+
+class Float(BaseBuiltinType, float):
+    pass
+
 
 class Integer(BaseBuiltinType, int):
     def __repr__(self) -> str:
-        return f'{self.__class__.__name__}({humanize.intcomma(int(self))})'
+        return f"{self.__class__.__name__}({humanize.intcomma(int(self))})"
+
 
 class Boolean(base.BaseType):
     def __new__(cls, value, *, validated: bool = False):
@@ -33,25 +36,22 @@ class Boolean(base.BaseType):
     def validate_str(cls, value: str) -> bool:
         value = value.lower()
 
-        values = \
-        {
-            True: \
-            (
-                'true',
-                't',
-                '1',
-                'on',
-                'yes',
-                'y',
+        values = {
+            True: (
+                "true",
+                "t",
+                "1",
+                "on",
+                "yes",
+                "y",
             ),
-            False: \
-            (
-                'false',
-                'f',
-                '0',
-                'off',
-                'no',
-                'n',
+            False: (
+                "false",
+                "f",
+                "0",
+                "off",
+                "no",
+                "n",
             ),
         }
 
@@ -59,4 +59,4 @@ class Boolean(base.BaseType):
             if value in cases:
                 return bool_value
 
-        raise ValueError('Unable to parse value as a boolean')
+        raise ValueError("Unable to parse value as a boolean")

@@ -2,9 +2,9 @@
 Custom validated types that work with pydantic
 
 ## Installation
-The `innertube` library uses [Poetry](https://github.com/python-poetry/poetry) and can easily be installed from source, or using *pip*
+The `pydantype` library uses [Poetry](https://github.com/python-poetry/poetry) and can easily be installed from source, or using *pip*
 
-### Using *pip* (from source)
+### Using *pip*
 ```console
 pip install git+https://github.com/tombulled/pydantype.git
 ```

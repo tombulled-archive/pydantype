@@ -1,17 +1,3 @@
-from .decorators import \
-(
-    validator,
-)
-
-from .base import \
-(
-    BaseType,
-)
-
-from .types import \
-(
-    String,
-    Integer,
-    Boolean,
-    Float,
-)
+from .base import BaseType
+from .decorators import validator
+from .types import Boolean, Float, Integer, String
