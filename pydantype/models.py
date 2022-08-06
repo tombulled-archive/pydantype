@@ -1,12 +1,11 @@
+from typing import List, Optional
+
 import pydantic
 
-from typing import \
-(
-    Optional,
-    List,
-)
 
-class BaseModel(pydantic.BaseModel): pass
+class BaseModel(pydantic.BaseModel):
+    pass
+
 
 class Validator(BaseModel):
     types: Optional[List[type]]
